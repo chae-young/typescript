@@ -75,3 +75,44 @@ function thisFunc() {
     // this: 타입
     console.log(1);
 }
+
+// 인터페이스
+interface personName {
+    name: string;
+}
+
+let person: personName = { name: "cat" };
+person.name = "dd";
+
+//아 이 함수의 인자는 personNAme의 타입을 가져야하는구나
+function nameTest(obj: personNane) {
+    console.log(obj.name);
+}
+nameTest(person);
+
+//읽기전용 배열 ReadonlyArray을 사용하면 수정안됨.
+let arr: ReadonlyArray<number> = [1, 2, 3];
+
+//객체 추론 무시
+interface CraftBeer {
+    brand?: string;
+    [propname: string]: any; // 인터페이스에 정의되지않는것을 추가로 사용하고싶을때
+}
+function brewBeer(beer: CraftBeer) {}
+
+brewBeer({ brandon: "test" } as CraftBeer);
+
+interface login {
+    (username: string, password: string): boolean;
+}
+
+let loginUser: login;
+loginUser = function (id: string, pw: string) {
+    return true;
+};
+
+interface Person {
+    name: string;
+}
+let fe = {} as Person;
+fe.name = "2";
