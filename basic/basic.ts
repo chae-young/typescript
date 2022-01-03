@@ -85,7 +85,7 @@ let person: personName = { name: "cat" };
 person.name = "dd";
 
 //아 이 함수의 인자는 personNAme의 타입을 가져야하는구나
-function nameTest(obj: personNane) {
+function nameTest(obj: personName) {
     console.log(obj.name);
 }
 nameTest(person);
@@ -116,3 +116,31 @@ interface Person {
 }
 let fe = {} as Person;
 fe.name = "2";
+
+//유니온 타입
+let a2: string | boolean = "2";
+
+//인터렉션 타입
+// ---> 하나의 타입으로 !
+
+interface World {
+    name: "stromg";
+    age: number;
+}
+interface America {
+    name: "string";
+    loaction: "string";
+}
+type AllWorld = World & America;
+
+class Developer {
+    name: string;
+}
+const josh = new Developer();
+josh.name = "ggg";
+
+//제네릭 (재사용성 높은 컴포넌트 만들경우 자주 사용한다)
+function getText<T>(text: T): T {
+    return text;
+}
+getText("2");

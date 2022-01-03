@@ -72,3 +72,34 @@ function thisFunc() {
     // this: 타입
     console.log(1);
 }
+var person = { name: "cat" };
+person.name = "dd";
+//아 이 함수의 인자는 personNAme의 타입을 가져야하는구나
+function nameTest(obj) {
+    console.log(obj.name);
+}
+nameTest(person);
+//읽기전용 배열 ReadonlyArray을 사용하면 수정안됨.
+var arr = [1, 2, 3];
+function brewBeer(beer) { }
+brewBeer({ brandon: "test" });
+var loginUser;
+loginUser = function (id, pw) {
+    return true;
+};
+var fe = {};
+fe.name = "2";
+//유니온 타입
+var a2 = "2";
+var Developer = /** @class */ (function () {
+    function Developer() {
+    }
+    return Developer;
+}());
+var josh = new Developer();
+josh.name = "ggg";
+//제네릭 (재사용성 높은 컴포넌트 만들경우 자주 사용한다)
+function getText(text) {
+    return text;
+}
+getText("2");
