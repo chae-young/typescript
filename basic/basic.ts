@@ -140,7 +140,24 @@ const josh = new Developer();
 josh.name = "ggg";
 
 //제네릭 (재사용성 높은 컴포넌트 만들경우 자주 사용한다)
-function getText<T>(text: T): T {
+function sgetText<T>(text: String<T>): String<T> {
+    console.log(text.length);
     return text;
 }
-getText("2");
+getText<string>("2");
+
+function text<T>(text: T): T {}
+let str3: <T>(text: T) => T = text;
+
+interface GetText {
+    <T>(text: T): T;
+}
+interface LengthWise {
+    length: number;
+}
+
+function logText<T extends LengthWise>(text: T): T {
+    console.log(text.length);
+    return text;
+}
+logText(10);
