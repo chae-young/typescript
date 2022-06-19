@@ -59,10 +59,27 @@ let str: string = "안뇽~"
 ````javascript
 let num: number = 10
 ````
+- any
+
+-모든 타입 허용   
+-타입을 지정하기 애매할 경우 사용
+
+````javascript
+let num: any = 10
+````
+- void
+
+-함수의 반환값이 없을때 사용   
+-변수의 경우 null or undefind
+
+````javascript
+let num: any = 10
+````
 - 배열
 ````javascript
 let arr: Array<number> = 10
 let arr: number[] = 10
+let arr: object[] = [ {id:1} ]
 ````
 - 튜플
 
@@ -120,4 +137,13 @@ sum(2,10,30)
 ````
 ?를 넣어주면 3번째 인자를 넣을지 말지 선택적으로 타입이 설정 가능하다.   
 인자값을 2개만 넣어도 에러가 일어나지 않는다
+
+- 함수 파라미터에 객체 타입 지정
+```javascript
+function sum( {a: number,b: string} ): void{
+    console.log('?')
+}
+sum({a:2,b:'cy'})
+```
+함수 파라미터에 객체의 속성 타입을 자세히 타이핑해줄 수 있다.
 
