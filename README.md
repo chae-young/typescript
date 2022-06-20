@@ -147,3 +147,92 @@ sum({a:2,b:'cy'})
 ```
 함수 파라미터에 객체의 속성 타입을 자세히 타이핑해줄 수 있다.
 
+<br>
+<br>
+
+## 3. 인터페이스
+상호간의 약속한 규칙!!   
+우린 이 속성의 타입을 인터페이스 oo 으로 쓰기로 약속했어 그러니까 이 인터페이스의 속성대로 정의해줘!!
+- 변수에 인터페이스 사용
+
+```javascript
+    interface User {
+        name: string,
+        age: number
+    }
+
+    // User인터페이스를 사용하므로 User에 정의된 타입을 꼭 작성해준다
+    const cy: User = {
+        name: 'cy',
+        age: 20
+    }
+```
+- 함수에 인터페이스 사용
+
+파라미터에 인터페이스를 적용.   
+함수의 인자에 인터페이스의 타입과 일치하게 정의 되었는지 확인.
+```javascript
+interface User {
+    name: string,
+    age: number
+}
+// 파라미터에 인터페이스 적용
+function UserInfo(info: User){
+    console.log(info)
+}
+const UserObj = {
+    name: 'cy',
+    age: 20
+}
+UserInfo(UserObj) // 객체가 인터페이스와 타입이 일치하는지 체크
+````
+- 함수에 스펙(파라미터,반환 타입)
+
+````javascript
+interface User{
+    (name: string, nickname: string): string 
+} 
+let UserFunc: User;
+UserFunc = function(name: string, nickname: string): string{
+    return `${name}의 별명은 ${nickname} 입니다`
+}
+UserFunc({'cy','chaeng'})
+````
+- 인터페이스 확장   
+
+상속자의 타입 까지 정의해줘야 한다!
+````javascript
+interface Person {
+    name: string,
+    age: number
+}
+interface Developer extends Person {
+    language: string
+}
+let obj: Developer  = {
+    name:'cy',
+    age:20,
+    language:'ts'
+}
+````
+
+## 4. 타입별칭(type aliases)   
+특정 타입이나 인터페이스를 참조 할 수 있는 특정 변수!   
+= 으로 정의
+
+````javascript
+// 변수
+type myString = string;
+const MyStr: myString = 'cy';
+
+type Person = {
+    name: string;
+    age: number;
+}
+const obj: Person = {
+    name: 'cy',
+    age: 20
+}
+````
+*타입 별칭은 드래그 했을때 쉽게 타입을 어떻게 정의 했는지 프리뷰가 가능하다*   
+>type interface의 가장 큰 차이점은 확장이다. 인터페이스는 확장이 가능하지만 type은 확장이 안된다
