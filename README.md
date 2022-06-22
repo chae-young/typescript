@@ -227,6 +227,8 @@ let obj: Developer  = {
     language:'ts'
 }
 ````
+<br/>
+<br/>
 
 ## 4. 타입별칭(type aliases)   
 특정 타입이나 인터페이스를 참조 할 수 있는 특정 변수!   
@@ -248,3 +250,104 @@ const obj: Person = {
 ````
 *타입 별칭은 드래그 했을때 쉽게 타입을 어떻게 정의 했는지 프리뷰가 가능하다*   
 >type interface의 가장 큰 차이점은 확장이다. 인터페이스는 확장이 가능하지만 type은 확장이 안된다
+
+<br/>
+<br/>
+
+## 5. 연사자를 이용한 타입
+### 1. 유니온타입
+
+하나 이상의 타입을 사용하는것   
+a 타입이거나 b타입 이면 ~ 
+
+````javascript
+function logMsg(value: string | number){
+    console.log(value)
+}
+logMsg('start')
+logMsg(10)
+````
+
+- 유니온 타입의 장점   
+    1. 파라미터나 변수에 한가지 이상의 타입을 쓰고 싶은 경우 사용
+    2. 타입가드 (타입을 좁혀나가는 과정)
+
+
+````javascript
+function logMsg(value: string | number){
+    if(typeof value === 'string' ){
+        value.tostring() // 타입에 관련된 api 자동완성이 된다
+    }
+    if(typeof value === 'number' ){
+        value.toFixed()
+    }    
+}
+logMsg('start')
+logMsg(10)
+````
+> 파라미터 타입이 any라면 명확하지가 않아서 자동완성이 되지 않음   
+
+<br/>
+
+### 2. 인터섹션타입
+타입 모두를 만족하는 것(합집합)
+
+````javascript
+interface Skill {
+    language: string
+}
+
+interface Person {
+    name: string,
+    age: number
+}
+
+function infoCard(info: Skill & Person){
+    info.name
+    info.language
+    info.age
+}
+infoCard({
+    name:'cy',
+    age:20,
+    //language:'ts' 에러가 남 왜냐하면 skill Person 모두 만족하는 값을 넣어줘야하는데 Person만 만족하는 상태임
+})
+````
+
+<br/>
+<br/>
+
+## 6. 이넘 enum
+특정값들의 집합
+
+- 숫자형 이넘   
+별도의 값을 쓰지 않으면 숫자로 출력 (0,1,2,3...)
+````javascript
+enum Cloths{
+    Shoes,
+    Tshirt,
+    Pants,
+}
+
+console.log(Cloths.Pants) // 2
+````
+
+- 문자형 이넘   
+값을 집어넣으면 문자로 출력
+````javascript
+enum Cloths{
+    Shoes = '신발',
+    Tshirt = '티셔츠',
+    Pants = '바지',
+}
+const buy = Cloths.Pants
+console.log(Cloths.Pants) // 바지
+````
+- 리버스 매핑   
+1. Cloths.Pants 키와 값으로 출력   
+2. Cloths[buy] 값으로도 키값 출력
+
+<br/>
+<br/>
+
+## 7. 클래스 Class
