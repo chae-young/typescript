@@ -8,12 +8,16 @@
     [1. 기본타입](#1-기본-타입)   
     [2. 함수타입](#2-함수-타입)   
     [3. 인터페이스](#3-인터페이스)   
-    [3. 타입별칭(type aliases)](#4-타입별칭type-aliases)
+    [4. 타입별칭(type aliases)](#4-타입별칭type-aliases)   
+    [5. 연사자를 이용한 타입](#5-연사자를-이용한-타입)   
+    [6. 이넘 enum](#6-이넘-enum)   
+    [7. 클래스 Class](#7-클래스)   
+    [8. 제네릭(Generics)](#8-제네릭)
 
 </br>
 
 ### ✍플러그인 목록
-- tslint,eslint
+- tslint, eslint
 </br></br>
 
 
@@ -255,7 +259,7 @@ const obj: Person = {
 <br/>
 
 ## 5. 연사자를 이용한 타입
-### 1. 유니온타입
+### 1) 유니온타입
 
 하나 이상의 타입을 사용하는것   
 a 타입이거나 b타입 이면 ~ 
@@ -289,7 +293,7 @@ logMsg(10)
 
 <br/>
 
-### 2. 인터섹션타입
+### 2) 인터섹션타입
 타입 모두를 만족하는 것(합집합)
 
 ````javascript
@@ -350,4 +354,116 @@ console.log(Cloths.Pants) // 바지
 <br/>
 <br/>
 
-## 7. 클래스 Class
+## 7. 클래스
+
+````
+???
+````
+
+<br/>
+<br/>
+
+## 8. 제네릭
+- 타입을 함수의 파라미터처럼 사용하는것
+- 재사용이 높은 컴포넌트를 만들때 주로 사용
+- 여러가지 타입에서 동작하는 컴포넌트를 생성할때 유용
+- 함수를 호출하는 시점에 ?? 타입으로 사용할거야 라고 정의
+- 받는 타입으로 그 타입을 추론해 반환값 까지 적용
+
+````javascript
+//일반함수
+function getText(text){
+    return text
+}
+getText('hi') // hi
+getText(2) // 2
+
+//제네릭
+function getText<T>(text: T): T{
+    return text
+}
+
+getText<string>('hi')
+getText<number>(2)
+````
+> 일반함수는 파라미터에 어떤 값이든 들어가지만 제네릭을 사용 할 경우 함수를 호출한 시점에 정의한 타입만 값으로 들어 갈 수 있다
+
+<br/>
+
+### 1) 제네릭을 사용하는 이유
+- 유니온 타입의 문제
+
+````javascript
+function getText(text: string | number){
+    return text
+}
+const a = getText('abcd')
+console.log( a.charAt(1) ) // error
+````
+유니온타입으로 string 또는 number에 해당하는 타입을 설정해놨기 때문에 a변수에 string api함수를 활용 할 경우 타입스크립트에서 에러가 난다. 정확히 string의 타입이 아니기 때문!
+
+````javascript
+function getText<T>(text: T): T{
+    return text
+}
+const a = getText<string>('abcd') // string 타입만 받음
+console.log( a.charAt(1) )
+````
+-유니온 타입의 단점은 보완   
+-함수의 중복사용 가능(함수가 중복인데 값이 다른경우..?)
+
+<br>
+
+### 2) 제네릭 타입 변수
+
+````javascript
+function logText<T>(text: T[]): T[] {//T라는 변수를 받고 배열 형태다
+  console.log(text.length); 
+  return text;
+}
+logText<number>([1,2])
+````
+### 3) 인터페이스에 제네릭 선언
+
+- 제네릭 사용전   
+공통된 속성의 타입을 다르게 설정함 으로써 중복되는 인터페이스가 많다.
+
+````javascript
+interface UserName{
+    info: string,
+    login: boolean,
+}
+
+interface UserPhone{
+    info: number,
+    login: boolean,
+}
+
+const UserNameSelect: UserName[] = [
+    {info: 'cy', login: true},
+    {info: 'suzy', login: false},
+]
+
+const UserPhoneSelect: UserPhone[] = [
+    {info: 12364567, login: true},
+    {info: 56568755, login: false},  
+]
+````
+- 제네릭 사용  
+제네릭으로 중복사용 정리
+
+````javascript
+interface UserInfo<T>{
+    info: T,
+    login: boolean,
+}
+
+const UserNameSelect: UserInfo<string>[] = [
+    {info: 'cy',login: true},
+    {info: 'suzy',login: false},  
+]
+const UserPhoneSelect: UserInfo<number>[] = [
+    {info: 12364567,login: true},
+    {info: 56568755,login: false},  
+]
+````
