@@ -12,8 +12,15 @@
     [5. 연사자를 이용한 타입](#5-연사자를-이용한-타입)   
     [6. 이넘 enum](#6-이넘-enum)   
     [7. 클래스 Class](#7-클래스)   
-    [8. 제네릭(Generics)](#8-제네릭)
-
+    [8. 제네릭(Generics)](#8-제네릭)   
+    [9. 타입추론](#9-타입추론)   
+    [10. 타입호환](#10-타입호환)
+1. 사용하기   
+   [1. 모듈](#1-모듈)   
+   [2. d.ts](#2-dts)
+2. config   
+    [tsconfig.json](#tsconfigjson)
+3. ETC
 </br>
 
 ### ✍플러그인 목록
@@ -467,3 +474,84 @@ const UserPhoneSelect: UserInfo<number>[] = [
     {info: 56568755,login: false},  
 ]
 ````
+
+<br/>
+<br/>
+
+## 9. 타입추론
+타입스크립트가 타입을 추론해 나간다
+````javascript
+function sum(b = 10){ //sum(b?: number): string
+    return b + 'hi'
+}
+````
+타입스크립트는 반환값 타입이 string 이라고 추측.   
+자바스크립트 특성상 숫자 + 문자를 하면 string이 기 때문이다.
+
+- best common type   
+````javascript
+const arr = [0,true,null] //const arr: (number | boolean | null)[]
+````
+arr 은 number 나 boolean null 일것이다! 유니온타입처럼 추론하는것!
+
+
+<br/>
+<br/>
+
+## 10. 타입호환
+-타입에 정의되어 있는 속성의 타입이 맞으면 호환된다.   
+-class interface 끼리도 상관없다. 그냥 타입만 맞으면 ok
+
+````javascript
+interface Developer {
+    name: string;
+    skil:string;
+}
+interface Person {
+    name: string;
+}
+var developer: Developer;
+var person: Person;
+
+developer = person // error!! person에 skil이 없다
+````
+- 구조적 타이핑
+````javascript
+var add = function(a:number){
+    console.log(a)
+}
+var sum = function(a:number,b:number){
+    console.log(a)  
+}
+add = sum //add 가 더 파라미터 값이 많기때문에 호환 안됨
+sum = add //sum에 add 의 속성을 가지고 있기 때문에 호환
+````
+<br/>
+<br/>
+
+## 사용하기
+## 1. 모듈
+-타입스크립트 모듈은 es6 모듈과 같다
+-tsconfig.js 에서 어떻게 컴파일 할지 모듈 변경 가능
+
+````javascript
+//app.ts
+import { Todo } from './types' 
+
+var item: Todo = {
+    title:'할일1',
+    checked: false,
+}
+
+//types.ts
+export interface Todo{
+    title: string;
+    checked: boolean;
+}
+
+````
+
+<br/>
+
+## 2. d.ts
+타입스크립트의 추론을 돕는 파일 
